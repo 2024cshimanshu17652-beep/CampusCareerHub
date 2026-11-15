@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Jobs | Campus Career Hub</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background: #f3f6fa; color: #24364b; }
+        header { background: #243b55; color: white; padding: 20px 6%; }
+        main { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+        .card { background: white; padding: 22px; margin: 16px 0; border-radius: 9px; box-shadow: 0 2px 10px #0000000d; }
+        .btn { display: inline-block; background: #243b55; color: white; padding: 10px 14px; border-radius: 5px; text-decoration: none; margin: 5px 5px 5px 0; }
+        .muted { color: #667085; }
+        .badge { font-weight: bold; }
+    </style>
+</head>
+<body>
+<header><h2>Campus Career Hub — Manage Jobs</h2></header>
+<main>
+    <p><a class="btn" href="{{ url_for('company_dashboard') }}">Company Dashboard</a></p>
+    <h1>Your Job Listings</h1>
+    <a class="btn" href="{{ url_for('create_job') }}">+ Create New Job</a>
+    <p class="muted">View the jobs associated with your company.</p>
+
+    {% if jobs %}
+        {% for job in jobs %}
+        <div class="card">
+            <h2>{{ job.title }}</h2>
+            <p>{{ job.description }}</p>
+            <p><strong>Type:</strong> {{ job.job_type }}</p>
+            <p><strong>Location:</strong> {{ job.location }}</p>
+            <p><strong>Minimum CGPA:</strong> {{ job.min_cgpa }}</p>
+            <p><strong>Maximum Backlogs:</strong> {{ job.max_backlogs }}</p>
+            <p><strong>Salary:</strong> {{ job.salary or 'Not specified' }}</p>
+            <p><strong>Deadline:</strong> {{ job.deadline or 'Not specified' }}</p>
+            <p><strong>Status:</strong> <span class="badge">{{ job.status }}</span></p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="card">
+            <h3>No jobs found</h3>
+            <p>You haven't posted any jobs under this company account yet.</p>
+        </div>
+    {% endif %}
+</main>
+</body>
+</html>

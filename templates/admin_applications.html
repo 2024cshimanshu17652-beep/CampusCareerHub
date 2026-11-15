@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Application Management | Campus Career Hub</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 25px;
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 4px;
+            background: #1d4ed8;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .btn:hover {
+            background: #1e40af;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+        }
+
+        table {
+            width: 100%;
+            min-width: 1000px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 13px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+
+        th {
+            background: #172554;
+            color: white;
+        }
+
+        tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .email {
+            overflow-wrap: anywhere;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <div class="topbar">
+        <div>
+            <h1>Application Management</h1>
+            <p>Review student applications and their current statuses.</p>
+        </div>
+
+        <div>
+            <a class="btn" href="{{ url_for('admin_dashboard') }}">
+                Admin Dashboard
+            </a>
+
+            <a class="btn" href="{{ url_for('admin_jobs') }}">
+                Manage Jobs
+            </a>
+
+            <a class="btn" href="{{ url_for('admin_users') }}">
+                Manage Users
+            </a>
+        </div>
+    </div>
+
+    <p>
+        <strong>Total applications:</strong> {{ applications|length }}
+    </p>
+
+    
+<form method="GET"
+      action="{{ url_for('admin_applications') }}"
+      style="background:white; padding:15px; margin:20px 0;
+             border-radius:8px; display:flex; gap:10px;
+             flex-wrap:wrap; align-items:center;">
+
+    <input
+        type="text"
+        name="search"
+        placeholder="Search student, email, job or company"
+        value="{{ search }}"
+        style="padding:10px; min-width:260px;"
+    >
+
+    <select name="status" style="padding:10px;">
+        <option value="">All Statuses</option>
+
+        <option value="APPLIED"
+            {% if status == 'APPLIED' %}selected{% endif %}>
+            Applied
+        </option>
+
+        <option value="SHORTLISTED"
+            {% if status == 'SHORTLISTED' %}selected{% endif %}>
+            Shortlisted
+        </option>
+
+        <option value="REJECTED"
+            {% if status == 'REJECTED' %}selected{% endif %}>
+            Rejected
+        </option>
+
+        <option value="SELECTED"
+            {% if status == 'SELECTED' %}selected{% endif %}>
+            Selected
+        </option>
+    </select>
+
+    <button type="submit" style="padding:10px 16px;">
+        Search / Filter
+    </button>
+
+    <a href="{{ url_for('admin_applications') }}"
+       style="padding:10px;">
+        Reset
+    </a>
+</form>
+
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Application ID</th>
+                    <th>Student Name</th>
+                    <th>Student Email</th>
+                    <th>Job Title</th>
+                    <th>Company</th>
+                    <th>Status</th>
+                    <th>Applied On</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for application, student, user, job in applications %}
+                <tr>
+                    <td>{{ application.id }}</td>
+
+                    <td>{{ user.name }}</td>
+
+                    <td class="email">{{ user.email }}</td>
+
+                    <td>{{ job.title }}</td>
+
+                    <td>{{ job.company_name }}</td>
+
+                    <td class="status">
+                        {{ application.status or 'APPLIED' }}
+                    </td>
+
+                    <td>
+                        {% if application.applied_at %}
+                            {{ application.applied_at.strftime('%d-%m-%Y %I:%M %p') }}
+                        {% else %}
+                            Not available
+                        {% endif %}
+                    </td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="7" class="empty">
+                        No applications found.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>

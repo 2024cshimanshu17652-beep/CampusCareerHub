@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Post Job - Campus Career Hub</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<nav class="dashboard-nav">
+
+    <div class="logo">
+        Campus Career Hub
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/company/dashboard">Dashboard</a>
+        <a href="/company/jobs">My Jobs</a>
+        <a href="/logout">Logout</a>
+
+    </div>
+
+</nav>
+
+
+<main class="profile-container">
+
+    <div class="profile-header">
+
+        <h1>
+            {{ "Edit Job" if job else "Post New Job" }}
+        </h1>
+
+    </div>
+
+
+    <form method="POST" class="profile-form">
+
+        <label>Job Title</label>
+
+        <input
+            type="text"
+            name="title"
+            required
+            value="{{ job.title if job else '' }}"
+            placeholder="e.g. Software Developer Intern"
+        >
+
+
+        <label>Job Type</label>
+
+        <select name="job_type" required>
+
+            <option value="Internship">
+                Internship
+            </option>
+
+            <option value="Full Time">
+                Full Time
+            </option>
+
+            <option value="Part Time">
+                Part Time
+            </option>
+
+        </select>
+
+
+        <label>Location</label>
+
+        <input
+            type="text"
+            name="location"
+            required
+            value="{{ job.location if job else '' }}"
+            placeholder="e.g. Jaipur / Remote"
+        >
+
+
+        <label>Job Description</label>
+
+        <textarea
+            name="description"
+            rows="7"
+            required
+            placeholder="Describe the role..."
+        >{{ job.description if job else '' }}</textarea>
+
+
+        <label>Minimum CGPA</label>
+
+        <input
+            type="number"
+            name="min_cgpa"
+            step="0.01"
+            min="0"
+            max="10"
+            value="{{ job.min_cgpa if job else 0 }}"
+        >
+
+
+        <label>Maximum Backlogs</label>
+
+        <input
+            type="number"
+            name="max_backlogs"
+            min="0"
+            value="{{ job.max_backlogs if job else 0 }}"
+        >
+
+
+        <label>Salary / Stipend</label>
+
+        <input
+            type="text"
+            name="salary"
+            value="{{ job.salary if job else '' }}"
+            placeholder="e.g. ₹25,000/month or ₹6 LPA"
+        >
+
+
+        <label>Application Deadline</label>
+
+        <input
+            type="date"
+            name="deadline"
+            value="{{ job.deadline if job else '' }}"
+            required
+        >
+
+
+        <button type="submit">
+            {{ "Update Job" if job else "Post Job" }}
+        </button>
+
+    </form>
+
+</main>
+
+</body>
+
+</html>

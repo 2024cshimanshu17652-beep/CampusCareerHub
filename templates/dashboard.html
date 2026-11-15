@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard - Campus Career Hub</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <nav class="dashboard-nav">
+
+        <div class="logo">
+            Campus Career Hub
+        </div>
+
+        <div class="nav-links">
+
+    <a href="/dashboard">Dashboard</a>
+
+    <a href="/jobs">Browse Opportunities</a>
+
+    <a href="/applications">View Applications</a>
+
+    <a href="/profile">Profile</a>
+
+    <a href="/logout">Logout</a>
+
+</div>
+
+    </nav>
+
+
+    <main class="dashboard-container">
+
+        <section class="welcome-section">
+
+            <h1>Welcome, {{ current_user.name }}! 👋</h1>
+
+            <p>
+                Manage your profile, explore opportunities,
+                and track your applications.
+            </p>
+
+        </section>
+
+
+        <section class="dashboard-cards">
+
+            <div class="dashboard-card">
+
+                <h2>👤 Profile</h2>
+
+                <p>
+                    Complete your student profile and
+                    showcase your skills.
+                </p>
+
+                <a href="/profile">View Profile</a>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <h2>💼 Jobs & Internships</h2>
+
+                <p>
+                    Explore available jobs and internship
+                    opportunities.
+                </p>
+
+                <a href="#">Browse Opportunities</a>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <h2>📄 Applications</h2>
+
+                <p>
+                    Track the status of your job and
+                    internship applications.
+                </p>
+
+                <a href="#">View Applications</a>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <h2>🎓 Skills & Certifications</h2>
+
+                <p>
+                    Add your technical skills,
+                    projects and certifications.
+                </p>
+
+                <a href="#">Manage Profile</a>
+
+            </div>
+
+        </section>
+
+
+        <section class="quick-info">
+
+            <h2>Account Information</h2>
+
+            <p>
+                <strong>Name:</strong>
+                {{ current_user.name }}
+            </p>
+
+            <p>
+                <strong>Email:</strong>
+                {{ current_user.email }}
+            </p>
+
+            <p>
+                <strong>Role:</strong>
+                {{ current_user.role }}
+            </p>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

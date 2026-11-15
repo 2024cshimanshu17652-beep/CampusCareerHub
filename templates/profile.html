@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Student Profile - Campus Career Hub</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <nav class="dashboard-nav">
+
+        <div class="logo">
+            Campus Career Hub
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/dashboard">Dashboard</a>
+
+            <a href="#">Jobs</a>
+
+            <a href="#">Applications</a>
+
+            <a href="/profile">Profile</a>
+
+            <a href="/logout">Logout</a>
+
+        </div>
+
+    </nav>
+
+
+    <main class="profile-container">
+
+        <div class="profile-header">
+
+            <h1>Student Profile</h1>
+
+            <p>
+                Complete your profile to improve your
+                placement opportunities.
+            </p>
+
+        </div>
+
+
+        <form method="POST" class="profile-form">
+
+
+            <h2>Personal Information</h2>
+
+
+            <label>Full Name</label>
+
+            <input
+                type="text"
+                value="{{ current_user.name }}"
+                disabled
+            >
+
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                value="{{ current_user.email }}"
+                disabled
+            >
+
+
+            <label>Phone Number</label>
+
+            <input
+                type="text"
+                name="phone"
+                value="{{ student.phone if student else '' }}"
+                placeholder="Enter phone number"
+            >
+
+
+            <h2>Academic Information</h2>
+
+
+            <label>College</label>
+
+            <input
+                type="text"
+                name="college"
+                value="{{ student.college if student else '' }}"
+                placeholder="Enter college name"
+            >
+
+
+            <label>Branch</label>
+
+            <input
+                type="text"
+                name="branch"
+                value="{{ student.branch if student else '' }}"
+                placeholder="e.g. Computer Science"
+            >
+
+
+            <label>Current Semester</label>
+
+            <input
+                type="number"
+                name="semester"
+                value="{{ student.semester if student else '' }}"
+                min="1"
+                max="8"
+                placeholder="e.g. 5"
+            >
+
+
+            <label>CGPA</label>
+
+            <input
+                type="number"
+                name="cgpa"
+                value="{{ student.cgpa if student else '' }}"
+                min="0"
+                max="10"
+                step="0.01"
+                placeholder="e.g. 8.15"
+            >
+
+
+            <label>Backlogs</label>
+
+            <input
+                type="number"
+                name="backlogs"
+                value="{{ student.backlogs if student else 0 }}"
+                min="0"
+                placeholder="Enter number of backlogs"
+            >
+
+
+            <label>Graduation Year</label>
+
+            <input
+                type="number"
+                name="graduation_year"
+                value="{{ student.graduation_year if student else '' }}"
+                placeholder="e.g. 2028"
+            >
+
+
+            <h2>Professional Profiles</h2>
+
+
+            <label>GitHub URL</label>
+
+            <input
+                type="url"
+                name="github_url"
+                value="{{ student.github_url if student else '' }}"
+                placeholder="https://github.com/username"
+            >
+
+
+            <label>LinkedIn URL</label>
+
+            <input
+                type="url"
+                name="linkedin_url"
+                value="{{ student.linkedin_url if student else '' }}"
+                placeholder="https://linkedin.com/in/username"
+            >
+
+
+            <button type="submit">
+                Save Profile
+            </button>
+
+
+        </form>
+
+    </main>
+
+</body>
+
+</html>

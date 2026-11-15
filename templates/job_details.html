@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>{{ job.title }} - Campus Career Hub</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<nav class="dashboard-nav">
+
+    <div class="logo">
+        Campus Career Hub
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/dashboard">Dashboard</a>
+        <a href="/jobs">Jobs</a>
+        <a href="/applications">Applications</a>
+        <a href="/profile">Profile</a>
+        <a href="/logout">Logout</a>
+
+    </div>
+
+</nav>
+
+
+<main class="job-details-container">
+
+    <div class="job-details-card">
+
+        <span class="job-type">
+            {{ job.job_type }}
+        </span>
+
+        <h1>{{ job.title }}</h1>
+
+        <h2>{{ job.company_name }}</h2>
+
+        <p>
+            📍 <strong>Location:</strong>
+            {{ job.location }}
+        </p>
+
+        <p>
+            💰 <strong>Salary:</strong>
+            {{ job.salary }}
+        </p>
+
+        <p>
+            🎓 <strong>Minimum CGPA:</strong>
+            {{ job.min_cgpa }}
+        </p>
+
+        <p>
+            📚 <strong>Maximum Backlogs:</strong>
+            {{ job.max_backlogs }}
+        </p>
+
+        <p>
+            📅 <strong>Application Deadline:</strong>
+            {{ job.deadline }}
+        </p>
+
+        <hr>
+
+        <h2>Job Description</h2>
+
+        <p class="job-description">
+            {{ job.description }}
+        </p>
+
+
+        {% if already_applied %}
+
+            <div class="already-applied">
+                ✓ You have already applied for this opportunity.
+            </div>
+
+        {% else %}
+
+            <form
+                method="POST"
+                action="{{ url_for('apply_job', job_id=job.id) }}"
+            >
+
+                <button type="submit"
+                        class="apply-button">
+
+                    Apply Now
+
+                </button>
+
+            </form>
+
+        {% endif %}
+
+    </div>
+
+</main>
+
+</body>
+
+</html>

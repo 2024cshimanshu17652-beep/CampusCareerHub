@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Applicants - Campus Career Hub</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<nav class="dashboard-nav">
+
+    <div class="logo">
+        Campus Career Hub
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/company/dashboard">
+            Dashboard
+        </a>
+
+        <a href="/company/jobs">
+            My Jobs
+        </a>
+
+        <a href="/company/job/create">
+            Post Job
+        </a>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<main class="applications-container">
+
+    <h1>Applicants</h1>
+
+    <p>
+        Review students who applied to your opportunities.
+    </p>
+
+
+    {% for item in applicants %}
+
+    <div class="application-card">
+
+        <h2>
+            {{ item.job.title }}
+        </h2>
+
+        <h3>
+            {{ item.student_user.name }}
+        </h3>
+
+        <p>
+            📧 {{ item.student_user.email }}
+        </p>
+
+        <p>
+            🎓 CGPA:
+            {{ item.student.cgpa if item.student.cgpa else "Not provided" }}
+        </p>
+
+        <p>
+            🏫 Branch:
+            {{ item.student.branch if item.student.branch else "Not provided" }}
+        </p>
+
+        <p>
+            📅 Applied:
+            {{ item.application.applied_at.strftime('%d %b %Y') }}
+        </p>
+
+
+        <form
+            method="POST"
+            action="/company/application/{{ item.application.id }}/status"
+        >
+
+            <label>
+                Application Status
+            </label>
+
+            <select name="status">
+
+                <option value="APPLIED"
+                    {% if item.application.status == "APPLIED" %}
+                    selected
+                    {% endif %}>
+                    Applied
+                </option>
+
+                <option value="SHORTLISTED"
+                    {% if item.application.status == "SHORTLISTED" %}
+                    selected
+                    {% endif %}>
+                    Shortlisted
+                </option>
+
+                <option value="INTERVIEW"
+                    {% if item.application.status == "INTERVIEW" %}
+                    selected
+                    {% endif %}>
+                    Interview
+                </option>
+
+                <option value="SELECTED"
+                    {% if item.application.status == "SELECTED" %}
+                    selected
+                    {% endif %}>
+                    Selected
+                </option>
+
+                <option value="REJECTED"
+                    {% if item.application.status == "REJECTED" %}
+                    selected
+                    {% endif %}>
+                    Rejected
+                </option>
+
+            </select>
+
+
+            <button type="submit">
+                Update Status
+            </button>
+
+        </form>
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-applications">
+
+        <h2>No applicants yet.</h2>
+
+        <p>
+            Applicants will appear here when students apply.
+        </p>
+
+    </div>
+
+    {% endfor %}
+
+</main>
+
+</body>
+
+</html>

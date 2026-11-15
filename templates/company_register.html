@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Company Registration - Campus Career Hub</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<nav class="dashboard-nav">
+
+    <div class="logo">
+        Campus Career Hub
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/">Home</a>
+        <a href="/login">Login</a>
+
+    </div>
+
+</nav>
+
+
+<main class="profile-container">
+
+    <div class="profile-header">
+
+        <h1>Company Registration</h1>
+
+        <p>
+            Register your company to post jobs and internships.
+        </p>
+
+    </div>
+
+
+    <form method="POST" class="profile-form">
+
+        <h2>Account Information</h2>
+
+        <label>Contact Person Name</label>
+
+        <input
+            type="text"
+            name="name"
+            required
+            placeholder="Enter contact person name"
+        >
+
+
+        <label>Email</label>
+
+        <input
+            type="email"
+            name="email"
+            required
+            placeholder="company@example.com"
+        >
+
+
+        <label>Password</label>
+
+        <input
+            type="password"
+            name="password"
+            required
+            placeholder="Create password"
+        >
+
+
+        <h2>Company Information</h2>
+
+        <label>Company Name</label>
+
+        <input
+            type="text"
+            name="company_name"
+            required
+            placeholder="Enter company name"
+        >
+
+
+        <label>Industry</label>
+
+        <input
+            type="text"
+            name="industry"
+            placeholder="e.g. IT, Finance, Healthcare"
+        >
+
+
+        <label>Location</label>
+
+        <input
+            type="text"
+            name="location"
+            placeholder="e.g. Jaipur"
+        >
+
+
+        <label>Website</label>
+
+        <input
+            type="url"
+            name="website"
+            placeholder="https://example.com"
+        >
+
+
+        <label>Company Description</label>
+
+        <textarea
+            name="description"
+            rows="5"
+            placeholder="Tell students about your company"
+        ></textarea>
+
+
+        <button type="submit">
+            Register Company
+        </button>
+
+    </form>
+
+</main>
+
+</body>
+
+</html>

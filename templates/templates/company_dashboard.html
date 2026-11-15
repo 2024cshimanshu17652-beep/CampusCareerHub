@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Company Dashboard - Campus Career Hub</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<nav class="dashboard-nav">
+
+    <div class="logo">
+        Campus Career Hub
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/company/dashboard">
+            Dashboard
+        </a>
+
+        <a href="/company/jobs">
+            My Jobs
+        </a>
+
+        <a href="/company/job/create">
+            Post Job
+        </a>
+
+        <a href="/company/applicants">
+            Applicants
+        </a>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<main class="dashboard-container">
+
+    <section class="welcome-section">
+
+        <h1>
+            Welcome, {{ company.company_name }}! 👋
+        </h1>
+
+        <p>
+            Manage your job postings and applicants.
+        </p>
+
+    </section>
+
+
+    <section class="dashboard-cards">
+
+        <div class="dashboard-card">
+
+            <h2>📢 Post Job</h2>
+
+            <p>
+                Create a new job or internship opportunity.
+            </p>
+
+            <a href="/company/job/create">
+                Post Opportunity
+            </a>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <h2>💼 My Jobs</h2>
+
+            <p>
+                View and manage your active opportunities.
+            </p>
+
+            <a href="/company/jobs">
+                Manage Jobs
+            </a>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <h2>👥 Applicants</h2>
+
+            <p>
+                Review students who applied to your jobs.
+            </p>
+
+            <a href="/company/applicants">
+                View Applicants
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+
+</html>

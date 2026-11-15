@@ -1,0 +1,423 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Campus Career Hub</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            color: #1f2937;
+        }
+
+        header {
+            background: #172554;
+            color: white;
+            padding: 20px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        header h2 {
+            margin: 0;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            margin-left: 16px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .welcome {
+            margin-bottom: 25px;
+        }
+
+        .welcome h1 {
+            margin-bottom: 8px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+            border-top: 4px solid #2563eb;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #4b5563;
+            font-size: 16px;
+        }
+
+        .number {
+            font-size: 34px;
+            font-weight: bold;
+            color: #1d4ed8;
+        }
+
+        .section {
+            background: white;
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        .section a {
+            display: inline-block;
+            margin: 8px 12px 8px 0;
+            padding: 10px 16px;
+            background: #1d4ed8;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .section a:hover {
+            background: #1e40af;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #6b7280;
+        }
+
+        
+
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    color: #243b55;
+}
+
+.dashboard-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.dashboard-card h3 {
+    margin-top: 0;
+    font-size: 16px;
+    color: #526579;
+}
+
+.dashboard-card p {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 12px 0;
+    color: #243b55;
+}
+
+.dashboard-card a {
+    display: inline-block;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.dashboard-card a:hover {
+    text-decoration: underline;
+}
+
+.navigation a,
+.nav-links a {
+    transition: background 0.2s ease;
+}
+
+@media (max-width: 768px) {
+    .dashboard-card {
+        padding: 16px;
+    }
+
+    .dashboard-card p {
+        font-size: 24px;
+    }
+}
+
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>Campus Career Hub</h2>
+
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <div class="welcome">
+        <h1>Admin Dashboard</h1>
+        <p>Welcome, {{ current_user.name }}! Manage and monitor the platform here.</p>
+    </div>
+
+    <div class="stats">
+
+        <div class="card">
+            <h3>Total Students</h3>
+            <div class="number">{{ total_students }}</div>
+        </div>
+
+        <div class="card">
+            <h3>Total Companies</h3>
+            <div class="number">{{ total_companies }}</div>
+        </div>
+
+        <div class="card">
+            <h3>Total Jobs</h3>
+            <div class="number">{{ total_jobs }}</div>
+        </div>
+
+        <div class="card">
+            <h3>Total Applications</h3>
+            <div class="number">{{ total_applications }}</div>
+        </div>
+
+        
+<div class="dashboard-card">
+    <h3>Active Jobs</h3>
+    <p>{{ active_jobs }}</p>
+    <a href="{{ url_for('admin_jobs', status='ACTIVE') }}">
+        View Active Jobs
+    </a>
+</div>
+
+<div class="dashboard-card">
+    <h3>Pending Applications</h3>
+    <p>{{ pending_applications }}</p>
+    <a href="{{ url_for('admin_applications', status='APPLIED') }}">
+        View Pending Applications
+    </a>
+</div>
+
+
+<section style="background:white; padding:22px; margin-top:25px;
+                border-radius:12px;
+                box-shadow:0 3px 12px rgba(0,0,0,0.07);">
+
+    <h2 style="margin-top:0;">Recent Applications</h2>
+    <p>Latest five applications submitted by students.</p>
+
+    <div style="overflow-x:auto;">
+        <table style="width:100%; border-collapse:collapse;
+                      min-width:700px;">
+
+            <thead>
+                <tr style="background:#243b55; color:white;">
+                    <th style="padding:12px; text-align:left;">Student</th>
+                    <th style="padding:12px; text-align:left;">Job</th>
+                    <th style="padding:12px; text-align:left;">Company</th>
+                    <th style="padding:12px; text-align:left;">Status</th>
+                    <th style="padding:12px; text-align:left;">Applied On</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for application, student, user, job in recent_applications %}
+                <tr>
+                    <td style="padding:12px; border-bottom:1px solid #ddd;">
+                        {{ user.name }}
+                    </td>
+
+                    <td style="padding:12px; border-bottom:1px solid #ddd;">
+                        {{ job.title }}
+                    </td>
+
+                    <td style="padding:12px; border-bottom:1px solid #ddd;">
+                        {{ job.company_name }}
+                    </td>
+
+                    <td style="padding:12px; border-bottom:1px solid #ddd;">
+                        {{ application.status }}
+                    </td>
+
+                    <td style="padding:12px; border-bottom:1px solid #ddd;">
+                        {{ application.applied_at.strftime('%d-%m-%Y %I:%M %p')
+                           if application.applied_at else '-' }}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" style="padding:18px; text-align:center;">
+                        No applications have been submitted yet.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+    <p style="margin-bottom:0; margin-top:18px;">
+        <a href="{{ url_for('admin_applications') }}"
+           style="color:#2563eb; text-decoration:none; font-weight:bold;">
+            View All Applications →
+        </a>
+    </p>
+
+</section>
+
+
+<section style="background:white; padding:22px; margin-top:25px;
+                border-radius:12px;
+                box-shadow:0 3px 12px rgba(0,0,0,0.07);">
+
+    <h2 style="margin-top:0;">Recent Jobs</h2>
+    <p>Latest five job listings added to the platform.</p>
+
+    <div style="overflow-x:auto;">
+        <table style="width:100%; border-collapse:collapse;
+                      min-width:650px;">
+
+            <thead>
+                <tr style="background:#243b55; color:white;">
+                    <th style="padding:12px; text-align:left;">Job Title</th>
+                    <th style="padding:12px; text-align:left;">Company</th>
+                    <th style="padding:12px; text-align:left;">Location</th>
+                    <th style="padding:12px; text-align:left;">Type</th>
+                    <th style="padding:12px; text-align:left;">Status</th>
+                    <th style="padding:12px; text-align:left;">Created</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for job in recent_jobs %}
+                <tr>
+                    <td style="padding:12px; border-bottom:1px solid #ddd;">
+                        {{ job.title }}
+                    </td>
+
+                    <td style="padding:12px; border-bottom:1px solid #ddd;">
+                        {{ job.company_name }}
+                    </td>
+
+                    <td style="padding:12px; border-bottom:1px solid #ddd;">
+                        {{ job.location }}
+                    </td>
+
+                    <td style="padding:12px; border-bottom:1px solid #ddd;">
+                        {{ job.job_type }}
+                    </td>
+
+                    <td style="padding:12px; border-bottom:1px solid #ddd;">
+                        {{ job.status }}
+                    </td>
+
+                    <td style="padding:12px; border-bottom:1px solid #ddd;">
+                        {{ job.created_at.strftime('%d-%m-%Y')
+                           if job.created_at else '-' }}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" style="padding:18px; text-align:center;">
+                        No jobs have been posted yet.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+        
+<div class="dashboard-card">
+    <h3>Student Profile Completion</h3>
+
+    <p>{{ profile_completion_percentage }}%</p>
+
+    <div style="background:#e5e7eb; height:10px;
+                border-radius:10px; overflow:hidden;">
+
+        <div style="background:#16a34a; height:10px;
+                    width:{{ profile_completion_percentage }}%;
+                    border-radius:10px;">
+        </div>
+    </div>
+
+    <p style="font-size:14px; font-weight:normal;">
+        Completed: {{ completed_profiles }}
+        <br>
+        Incomplete: {{ incomplete_profiles }}
+    </p>
+
+    <a href="{{ url_for('admin_students') }}">
+        View Student Profiles
+    </a>
+</div>
+
+    </div>
+
+    <p style="margin-bottom:0; margin-top:18px;">
+        <a href="{{ url_for('admin_jobs') }}"
+           style="color:#2563eb; text-decoration:none; font-weight:bold;">
+            Manage All Jobs →
+        </a>
+    </p>
+
+</section>
+
+
+
+
+    </div>
+
+    
+<div class="section">
+    <h2>Admin Management</h2>
+    <p>Manage and monitor the Campus Career Hub platform.</p>
+
+    <a href="{{ url_for('admin_users') }}">Manage Users</a>
+    <a href="{{ url_for('admin_companies') }}">Manage Companies</a>
+    <a href="{{ url_for('admin_jobs') }}">Manage Jobs</a>
+    <a href="{{ url_for('admin_applications') }}">Manage Applications</a>
+    <a href="{{ url_for('admin_students') }}">Manage Students</a>
+    <a href="{{ url_for('home') }}">View Website</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</div>
+
+
+</div>
+
+<footer>
+    &copy; 2026 Campus Career Hub | Admin Panel
+</footer>
+
+</body>
+</html>

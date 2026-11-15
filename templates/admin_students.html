@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Students</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        h1 {
+            color: #243b55;
+        }
+
+        .navigation {
+            margin-bottom: 20px;
+        }
+
+        .navigation a {
+            display: inline-block;
+            background: #243b55;
+            color: white;
+            padding: 10px 14px;
+            margin: 4px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 1150px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #243b55;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f1f5f9;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <h1>Student Management</h1>
+    <p>View registered students and their academic profile details.</p>
+
+    <div class="navigation">
+        <a href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a>
+        <a href="{{ url_for('admin_users') }}">Manage Users</a>
+        <a href="{{ url_for('admin_companies') }}">Manage Companies</a>
+        <a href="{{ url_for('admin_jobs') }}">Manage Jobs</a>
+        <a href="{{ url_for('admin_applications') }}">Manage Applications</a>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>College</th>
+                    <th>Branch</th>
+                    <th>Semester</th>
+                    <th>CGPA</th>
+                    <th>Backlogs</th>
+                    <th>Graduation Year</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for user, student in students %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ student.phone or '-' if student else '-' }}</td>
+                    <td>{{ student.college or '-' if student else '-' }}</td>
+                    <td>{{ student.branch or '-' if student else '-' }}</td>
+                    <td>{{ student.semester if student and student.semester is not none else '-' }}</td>
+                    <td>{{ student.cgpa if student and student.cgpa is not none else '-' }}</td>
+                    <td>{{ student.backlogs if student and student.backlogs is not none else '-' }}</td>
+                    <td>{{ student.graduation_year if student and student.graduation_year is not none else '-' }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="10" class="empty">No student accounts found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>

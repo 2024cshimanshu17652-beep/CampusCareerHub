@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Applications | Campus Career Hub</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f3f6fa;
+            color: #24364b;
+        }
+
+        header {
+            background: #243b55;
+            color: white;
+            padding: 20px 6%;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 18px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #00000012;
+        }
+
+        .job-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #243b55;
+        }
+
+        .company {
+            color: #555;
+            margin-top: 5px;
+        }
+
+        .info {
+            margin-top: 12px;
+            line-height: 1.8;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .applied {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .shortlisted {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .selected {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .back {
+            display: inline-block;
+            background: #243b55;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>Campus Career Hub</h2>
+</header>
+
+<main>
+
+    <a href="{{ url_for('dashboard') }}" class="back">
+        Back to Dashboard
+    </a>
+
+    <h1>My Applications</h1>
+
+    {% if applications %}
+
+        {% for item in applications %}
+
+            <div class="card">
+
+                {% if item.job %}
+
+                    <div class="job-title">
+                        {{ item.job.title }}
+                    </div>
+
+                    <div class="company">
+                        Company: {{ item.job.company_name }}
+                    </div>
+
+                    <div class="info">
+                        <strong>Job Type:</strong>
+                        {{ item.job.job_type }}
+                        <br>
+
+                        <strong>Location:</strong>
+                        {{ item.job.location }}
+                        <br>
+
+                        <strong>Salary:</strong>
+                        {{ item.job.salary or "Not specified" }}
+                        <br>
+
+                        <strong>Applied On:</strong>
+                        {{ item.application.applied_at.strftime("%d-%m-%Y %H:%M") if item.application.applied_at else "Not available" }}
+                    </div>
+
+                {% else %}
+
+                    <div class="job-title">
+                        Job information unavailable
+                    </div>
+
+                {% endif %}
+
+                {% if item.application.status == "APPLIED" %}
+
+                    <span class="status applied">
+                        Applied
+                    </span>
+
+                {% elif item.application.status == "SHORTLISTED" %}
+
+                    <span class="status shortlisted">
+                        Shortlisted
+                    </span>
+
+                {% elif item.application.status == "SELECTED" %}
+
+                    <span class="status selected">
+                        Selected
+                    </span>
+
+                {% elif item.application.status == "REJECTED" %}
+
+                    <span class="status rejected">
+                        Rejected
+                    </span>
+
+                {% else %}
+
+                    <span class="status">
+                        {{ item.application.status }}
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="card">
+            <h3>No applications yet</h3>
+            <p>You have not applied for any jobs.</p>
+        </div>
+
+    {% endif %}
+
+</main>
+
+</body>
+</html>

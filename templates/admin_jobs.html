@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Job Management | Campus Career Hub</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 25px;
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 4px;
+            background: #1d4ed8;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .btn:hover {
+            background: #1e40af;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+        }
+
+        table {
+            width: 100%;
+            min-width: 1100px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+
+        th {
+            background: #172554;
+            color: white;
+        }
+
+        tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .description {
+            max-width: 250px;
+            overflow-wrap: anywhere;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <div class="topbar">
+        <div>
+            <h1>Job Management</h1>
+            <p>View and monitor all job postings on Campus Career Hub.</p>
+        </div>
+
+        <div>
+            <a class="btn" href="{{ url_for('admin_dashboard') }}">
+                Admin Dashboard
+            </a>
+
+            <a class="btn" href="{{ url_for('admin_companies') }}">
+                Manage Companies
+            </a>
+
+            <a class="btn" href="{{ url_for('admin_applications') }}">
+                Manage Applications
+            </a>
+        </div>
+    </div>
+
+    
+<form method="GET" action="{{ url_for('admin_jobs') }}"
+      style="background:white; padding:15px; margin:20px 0;
+             border-radius:8px; display:flex; gap:10px;
+             flex-wrap:wrap; align-items:center;">
+
+    <input
+        type="text"
+        name="search"
+        placeholder="Search job title or company"
+        value="{{ search }}"
+        style="padding:10px; min-width:250px;"
+    >
+
+    <select name="status" style="padding:10px;">
+        <option value="">All Statuses</option>
+        <option value="ACTIVE"
+            {% if status == 'ACTIVE' %}selected{% endif %}>
+            Active
+        </option>
+        <option value="CLOSED"
+            {% if status == 'CLOSED' %}selected{% endif %}>
+            Closed
+        </option>
+        <option value="INACTIVE"
+            {% if status == 'INACTIVE' %}selected{% endif %}>
+            Inactive
+        </option>
+    </select>
+
+    <button type="submit" style="padding:10px 16px;">
+        Search / Filter
+    </button>
+
+    <a href="{{ url_for('admin_jobs') }}" style="padding:10px;">
+        Reset
+    </a>
+</form>
+
+
+    <p><strong>Total job postings:</strong> {{ jobs|length }}</p>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Job ID</th>
+                    <th>Company</th>
+                    <th>Job Title</th>
+                    <th>Job Type</th>
+                    <th>Location</th>
+                    <th>Salary</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                    <th>Posted On</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for job in jobs %}
+                <tr>
+                    <td>{{ job.id }}</td>
+
+                    <td>{{ job.company_name }}</td>
+
+                    <td>
+                        <strong>{{ job.title }}</strong>
+                        <div class="description">
+                            {{ job.description|truncate(100, True, '...') }}
+                        </div>
+                    </td>
+
+                    <td>{{ job.job_type }}</td>
+
+                    <td>{{ job.location }}</td>
+
+                    <td>{{ job.salary or 'Not specified' }}</td>
+
+                    <td>
+                        {% if job.deadline %}
+                            {{ job.deadline.strftime('%d-%m-%Y') }}
+                        {% else %}
+                            Not specified
+                        {% endif %}
+                    </td>
+
+                    <td class="status">
+                        {{ job.status or 'ACTIVE' }}
+                    </td>
+
+                    <td>
+                        {% if job.created_at %}
+                            {{ job.created_at.strftime('%d-%m-%Y') }}
+                        {% else %}
+                            Not available
+                        {% endif %}
+                    </td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="9" class="empty">
+                        No job postings found.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>

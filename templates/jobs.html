@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Jobs & Internships - Campus Career Hub</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<nav class="dashboard-nav">
+
+    <div class="logo">
+        Campus Career Hub
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/dashboard">Dashboard</a>
+        <a href="/jobs">Jobs</a>
+        <a href="/applications">Applications</a>
+        <a href="/profile">Profile</a>
+        <a href="/logout">Logout</a>
+
+    </div>
+
+</nav>
+
+
+<main class="jobs-container">
+
+    <div class="jobs-header">
+
+        <h1>Jobs & Internships</h1>
+
+        <p>
+            Explore software development, data analytics
+            and internship opportunities.
+        </p>
+
+    </div>
+
+
+    <div class="jobs-grid">
+
+        {% for job in jobs %}
+
+        <div class="job-card">
+
+            <span class="job-type">
+                {{ job.job_type }}
+            </span>
+
+            <h2>{{ job.title }}</h2>
+
+            <h3>{{ job.company_name }}</h3>
+
+            <p>
+                📍 {{ job.location }}
+            </p>
+
+            <p>
+                🎓 Minimum CGPA: {{ job.min_cgpa }}
+            </p>
+
+            <p>
+                💼 Salary: {{ job.salary }}
+            </p>
+
+            <p>
+                📅 Deadline: {{ job.deadline }}
+            </p>
+
+            <a
+                href="{{ url_for('job_details', job_id=job.id) }}"
+                class="job-button"
+            >
+                View Details
+            </a>
+
+        </div>
+
+        {% else %}
+
+        <p>No active jobs available.</p>
+
+        {% endfor %}
+
+    </div>
+
+</main>
+
+</body>
+
+</html>
